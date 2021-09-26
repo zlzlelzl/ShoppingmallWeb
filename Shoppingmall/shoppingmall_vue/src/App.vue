@@ -7,9 +7,9 @@
                 >
 
                 <a class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbar-menu" @click="showMobileMenu = !showMobileMenu">
-                    <span aria-hidden="ture"></span>
-                    <span aria-hidden="ture"></span>
-                    <span aria-hidden="ture"></span>
+                    <span aria-hidden="true"></span>
+                    <span aria-hidden="true"></span>
+                    <span aria-hidden="true"></span>
                 </a>
             </div>
 
@@ -44,12 +44,21 @@
 
                     <div class="navbar-item">
                         <div class="buttons">
-                            
-                            <router-link
-                                to="/log-in"
-                                class="button is-light"
-                                >Log in</router-link
-                            >
+                            <template v-if="$store.state.isAuthenticated">
+                                <router-link
+                                    to="/my-account"
+                                    class="button is-light"
+                                    >My account</router-link
+                                >
+                            </template>
+
+                            <template v-else>
+                                <router-link
+                                    to="/log-in"
+                                    class="button is-light"
+                                    >Log in</router-link
+                                >
+                            </template>
 
                             <router-link to="/cart" class="button is-success">
                                 <span class="icon">
@@ -78,6 +87,8 @@
 </template>
 
 <script>
+import axios from 'axios'
+
 export default{
     data(){
         return {
@@ -89,6 +100,14 @@ export default{
     },
     beforeCreate(){
         this.$store.commit("initializeStore")
+
+        const token = this.$store.state.token
+
+        if (token){
+            axios.defaults.headers.common["Authorization"] = "Token " + token
+        } else {
+            axios.defaults.headers.common["Authorization"] = ""
+        }
     },
     mounted(){
         this.cart = this.$store.state.cart

@@ -1,10 +1,16 @@
 import { createRouter, createWebHistory } from "vue-router"
 import Home from "../views/Home.vue"
 
+import store from "../store"
 import Product from "../views/Product.vue"
 import Category from "../views/Category.vue"
 import Search from "../views/Search.vue"
 import Cart from "../views/Cart.vue"
+import SignUp from "../views/SignUp.vue"
+import LogIn from "../views/LogIn.vue"
+import MyAccount from "../views/MyAccount.vue"
+import Checkout from "../views/Checkout.vue"
+import Success from "../views/Success.vue"
 
 const routes = [
     {
@@ -22,12 +28,43 @@ const routes = [
             import(/* webpackChunkName: "about" */ "../views/About.vue"),
     },
     {
+        path: "/cart/checkout",
+        name: "Checkout",
+        component: Checkout,
+        meta: {
+            requireLogin: true,
+        },
+    },
+    {
+        path: "/my-account",
+        name: "MyAccount",
+        component: MyAccount,
+        meta: {
+            requireLogin: true,
+        },
+    },
+    {
+        path: "/cart/success",
+        name: "Success",
+        component: Success,
+    },
+    {
+        path: "/log-in",
+        name: "LogIn",
+        component: LogIn,
+    },
+    {
+        path: "/sign-up",
+        name: "SignUp",
+        component: SignUp,
+    },
+    {
         path: "/cart",
         name: "Cart",
         component: Cart,
     },
     {
-        path: "/:search",
+        path: "/search",
         name: "Search",
         component: Search,
     },
@@ -46,6 +83,17 @@ const routes = [
 const router = createRouter({
     history: createWebHistory(process.env.BASE_URL),
     routes,
+})
+
+router.beforeEach((to, from, next) => {
+    if (
+        to.matched.some((record) => record.meta.requireLogin) &&
+        !store.state.isAuthenticated
+    ) {
+        next({ name: "LogIn", query: { to: to.path } })
+    } else {
+        next()
+    }
 })
 
 export default router

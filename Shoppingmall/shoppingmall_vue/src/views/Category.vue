@@ -5,90 +5,69 @@
                 <h2 class="is-size-2 has-text-centered">{{ category.name }}</h2>
             </div>
 
-            <ProductBox
-                 v-for="product in category.products"
-                 v-bind:key="product.id"
-                 v-bind:product="product" />
+            <ProductBox 
+                v-for="product in category.products"
+                v-bind:key="product.id"
+                v-bind:product="product" />
         </div>
     </div>
 </template>
 
 <script>
-import axios from "axios"
-import { toast } from "bulma-toast"
+import axios from 'axios'
+import { toast } from 'bulma-toast'
 
-import ProductBox from "@/components/ProductBox"
+import ProductBox from '@/components/ProductBox'
 
 export default {
-    name: "Category",
-    components:{
+    name: 'Category',
+    components: {
         ProductBox
     },
-    data(){
+    data() {
         return {
             category: {
                 products: []
             }
         }
     },
-    mounted(){
+    mounted() {
         this.getCategory()
     },
     watch: {
-        $route(to,from){
-            if (to.name === "Category"){
+        $route(to, from) {
+            if (to.name === 'Category') {
                 this.getCategory()
             }
         }
     },
-    methods:{
-        async getCategory(){
+    methods: {
+        async getCategory() {
             const categorySlug = this.$route.params.category_slug
 
-            this.$store.commit("setIsLoading",true)
+            this.$store.commit('setIsLoading', true)
 
-            await axios
+            axios
                 .get(`/api/v1/products/${categorySlug}/`)
-                .then(response=>{
+                .then(response => {
                     this.category = response.data
 
-                    document.title = this.category.name + " | Djackets"
+                    document.title = this.category.name + ' | Djackets'
                 })
-                .catch(error=>{
+                .catch(error => {
                     console.log(error)
 
                     toast({
-                        message:"Someting went wrong. Please try again",
-                        type: "is-danger",
+                        message: 'Something went wrong. Please try again.',
+                        type: 'is-danger',
                         dismissible: true,
                         pauseOnHover: true,
                         duration: 2000,
-                        position: "bottom-right",
+                        position: 'bottom-right',
                     })
                 })
 
-            this.$store.commit("setIsLoading",false)
-        },
-        addToCart(){
-            if (isNaN(this.quantity) || this.quantity < 1){
-                this.quantity = 1
-            }
-
-            const item = {
-                product: this.product,
-                quantity: this.quantity,
-            }
-
-            this.$store.commit("addToCart", item)
-
-            toast({
-                message:"The product was added to the cart",
-                type: "is-success",
-                dismissible: true,
-                pauseOnHover: true,
-                duration: 2000,
-                position: "bottom-right",
-            })
+            this.$store.commit('setIsLoading', false)
         }
     }
 }
