@@ -13,7 +13,6 @@ with open(secret_file) as f:
 
 
 def get_secret(setting, secrets=secrets):
-    """비밀 변수를 가져오거나 명시적 예외를 반환한다."""
     try:
         return secrets[setting]
     except KeyError:
@@ -33,8 +32,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-STRIPE_SECRET_KEY = get_secret("STRIPE_SECRET_KEY")
-# stripe secret key changed!
+# STRIPE_SECRET_KEY = get_secret("STRIPE_SECRET_KEY")
+# stripe secret key not used
 # Application definition
 
 INSTALLED_APPS = [
