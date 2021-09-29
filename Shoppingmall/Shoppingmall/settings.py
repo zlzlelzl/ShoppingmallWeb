@@ -28,9 +28,9 @@ SECRET_KEY = get_secret("SECRET_KEY")
 # secret key changed!
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 # STRIPE_SECRET_KEY = get_secret("STRIPE_SECRET_KEY")
 # stripe secret key not used
