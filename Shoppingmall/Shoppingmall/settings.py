@@ -6,26 +6,30 @@ from django.core.exceptions import ImproperlyConfigured
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-secret_file = os.path.join(BASE_DIR, 'secrets.json')  # secrets.json 파일 위치를 명시
 
-with open(secret_file) as f:
-    secrets = json.loads(f.read())
+def get_json(json_file_name, setting):
 
+    # json 파일 위치
+    json_file = os.path.join(BASE_DIR, json_file_name + '.json')
 
-def get_secret(setting, secrets=secrets):
+    with open(json_file) as f:
+        data = json.loads(f.read())
+
     try:
-        return secrets[setting]
+        return data[setting]
     except KeyError:
         error_msg = "Set the {} environment variable".format(setting)
         raise ImproperlyConfigured(error_msg)
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
+
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = get_secret("SECRET_KEY")
+SECRET_KEY = get_json("secrets", "SECRET_KEY")
 # secret key changed!
+
+EC2_HOST = get_json("ec2_host", "EC2_HOST")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
@@ -53,7 +57,7 @@ INSTALLED_APPS = [
     "order"
 ]
 
-CORS_ALLOWED_ORIGINS = ["http://127.0.0.1:8080"]
+CORS_ALLOWED_ORIGINS = ["http://127.0.0.1:8080", EC2_HOST]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -101,7 +105,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': "djackets",
         'USER': "djacketsuser",
-        "PASSWORD": "djacketsuser",
+        "PASSWORD": "djacketspassword",
         "HOST": "localhost",
         "PORT": ""
     }
