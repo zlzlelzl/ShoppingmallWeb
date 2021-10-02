@@ -18,7 +18,7 @@ def get_json(json_file_name, setting):
     try:
         return data[setting]
     except KeyError:
-        error_msg = "Set the {} environment variable".format(setting)
+        error_msg = 'Set the {} environment variable'.format(setting)
         raise ImproperlyConfigured(error_msg)
 
 # Quick-start development settings - unsuitable for production
@@ -26,17 +26,17 @@ def get_json(json_file_name, setting):
 
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = get_json("secrets", "SECRET_KEY")
+SECRET_KEY = get_json('secrets', 'SECRET_KEY')
 # secret key changed!
 
-EC2_HOST = get_json("ec2_host", "EC2_HOST")
+# EC2_HOST = get_json('ec2_host', 'EC2_HOST')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = ['*']
 
-# STRIPE_SECRET_KEY = get_secret("STRIPE_SECRET_KEY")
+# STRIPE_SECRET_KEY = get_secret('STRIPE_SECRET_KEY')
 # stripe secret key not used
 # Application definition
 
@@ -48,21 +48,21 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    "rest_framework",
-    "rest_framework.authtoken",
-    "corsheaders",
-    "djoser",
+    'rest_framework',
+    'rest_framework.authtoken',
+    'corsheaders',
+    'djoser',
 
-    "product",
-    "order"
+    'product',
+    'order'
 ]
 
-CORS_ALLOWED_ORIGINS = ["http://127.0.0.1:8080", EC2_HOST]
+CORS_ALLOWED_ORIGINS = ['http://127.0.0.1:8080']
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    "corsheaders.middleware.CorsMiddleware",
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -75,7 +75,7 @@ ROOT_URLCONF = 'Shoppingmall.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR/"templates"],
+        'DIRS': [BASE_DIR/'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -101,13 +101,13 @@ WSGI_APPLICATION = 'Shoppingmall.wsgi.application'
 #     }
 # }
 DATABASES = {
-    "default": {
+    'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': "djackets",
-        'USER': "djacketsuser",
-        "PASSWORD": "djacketspassword",
-        "HOST": "localhost",
-        "PORT": ""
+        'NAME': 'djackets',
+        'USER': 'djacketsuser',
+        'PASSWORD': 'djacketspassword',
+        'HOST': 'localhost',
+        'PORT': ''
     }
 }
 
@@ -149,8 +149,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = '/static/'
-MEDIA_URL = "/media/"
-MEDIA_ROOT = BASE_DIR / "media/"
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
