@@ -13,8 +13,10 @@ def get_json(json_file_name, setting):
     json_file = os.path.join(BASE_DIR, json_file_name + '.json')
 
     with open(json_file) as f:
-        data = json.loads(f.read())
-
+        raw_data = f.read()
+        print(raw_data)
+        data = json.loads(raw_data)
+    
     try:
         return data[setting]
     except KeyError:
