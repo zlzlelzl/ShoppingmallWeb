@@ -155,3 +155,32 @@ class ProductSerializer(serializers.ModelSerializer):
         )
 ```
 in product.serializers.py
+
+
+## ec2 setting
+
+root required
+
+``` bash
+sudo apt-get update
+sudo apt-get upgrade
+sudo apt install python3-pip python3-dev libpq-dev postgresql postgresql-contrib nginx
+sudo apt install certbot python3-certbot-nginx
+sudo -u postgres psql
+CREATE DATABASE djackets;
+CREATE USER djacketsuser WITH PASSWORD 'djacketspassword';
+ALTER ROLE djacketsuser SET client_encoding TO 'utf8';
+ALTER ROLE djacketsuser SET default_transaction_isolation TO 'read committed';
+ALTER ROLE djacketsuser SET timezone TO 'UTC';
+GRANT ALL PRIVILEGES ON DATABASE djackets TO djacketsuser;
+\q
+sudo -H pip3 install --upgrade pip
+sudo -H pip3 install virtualenv
+mkdir -p /webapps/djackets
+cd /webapps/djackets/
+sudo groupadd --system webapps
+sudo useradd --system --gid webapps --shell /bin/bash --home /webapps/djackets djackets
+virtualenv environment_3_9_10
+source bin/bash/activate
+```
+pip install psycopg2-binary

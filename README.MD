@@ -2,24 +2,25 @@
 
 ## how to run
 
-require : poetry, npm
+- 작성중
 
-- poetry run python manage.py runserver &
+<!-- require : npm -->
+
+<!-- - poetry run python manage.py runserver &
 - cd shoppingmall_vue
-- npm install && npm run serve
+- npm install && npm run serve -->
 
-- start at http://127.0.0.1:8080/
+<!-- - start at http://127.0.0.1:8080/ -->
 
 ## todo
 
 - bash로 자동실행파일 만들기
-- 배포용 setting 알아보기
 - github action CD
-- nginx같은 WS 알아보기
 
 ## done
 
-- 
+- 배포용 setting 알아보기
+- nginx 권한문제 해결
 
 ## progress
 
