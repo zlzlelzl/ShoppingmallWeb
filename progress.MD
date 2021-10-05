@@ -180,7 +180,78 @@ mkdir -p /webapps/djackets
 cd /webapps/djackets/
 sudo groupadd --system webapps
 sudo useradd --system --gid webapps --shell /bin/bash --home /webapps/djackets djackets
-virtualenv environment_3_9_10
-source bin/bash/activate
-```
+virtualenv environment_3_8_2
+source environment_3_8_2/bin/activate
 pip install psycopg2-binary
+git clone ${my-django-project}
+vi secrets.json (this file gitignored)
+chown -R djackets:webapps . (env folder)
+pip install -r ./ShoppingmallWeb/Shoppingmall/requirements.txt
+python manageprod.py makemigrations
+python manageprod.py migrate
+pip install gunicorn
+vi environment_3_8_2/bin/gunicorn_start
+apt install supervisor
+vi environment_3_8_2/bin/etc/supervisor/conf.d/djackets.conf
+mkdir /webapps/djackets/environment_3_8_2/logs/
+supervisorctl reread
+supervisorctl update
+supervisorctl status
+cd /etc/nginx/sites-available/
+vi zlzlelzl.tk.nginx.conf
+cd ../sites-enabled
+# ln -s ../sites-available/zlzlelzl.tk.nginx.conf
+```
+sudo certbot -d zlzlelzl.tk
+
+
+
+```nginx
+upstream djackets_app_server {
+	server unix:/webapps/djackets/environment_3_8_2/run/gunicorn.sock fail_timeout=0;
+}
+
+server {
+	listen 80;
+	server_name apidjackets.codewithstein.com;
+	return 301 https://apidjackets.codewithstein.com$request_uri;
+}
+
+server {
+	listen 443 ssl;
+	server_name apidjackets.codewithstein.com;
+
+	client_max_body_size 4G;
+
+	access_log /webapps/djackets/environment_3_8_2/logs/nginx-django-access.log;
+	error_log /webapps/djackets/environment_3_8_2/logs/nginx-django-error.log;
+
+	ssl_certificate /etc/letsencrypt/live/apidjackets.codewithstein.com/fullchain.pem;
+	ssl_certificate_key /etc/letsencrypt/live/apidjackets.codewithstein.com/privkey.pem;
+
+	ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
+	ssl_prefer_server_ciphers on;
+	ssl_ciphers 'EECDH+AESGCM:EDH+AESGCM:AES256+EECDH:AES256+EDH';
+
+	location /static/ {
+		alias /webapps/djackets//environment_3_8_2/djackets/static/;
+	}
+
+	location /media/ {
+		alias /webapps/djackets/djackets_django/media/;
+	}
+
+	location / {
+		proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+
+		proxy_set_header Host $http_host;
+
+		proxy_redirect off;
+
+		if (!-f $request_filename) {
+			proxy_pass http://djackets_app_server;
+		}
+	}
+}
+
+```
