@@ -164,7 +164,8 @@ root required
 ``` bash
 sudo apt-get update
 sudo apt-get upgrade -y
-sudo apt install python3-pip python3-dev libpq-dev postgresql postgresql-contrib nginx certbot python3-certbot-nginx -y
+sudo apt install python3-pip python3-dev libpq-dev postgresql postgresql-contrib nginx -y
+sudo apt install certbot python3-certbot-nginx -y
 sudo -u postgres psql
 CREATE DATABASE djackets;
 CREATE USER djacketsuser WITH PASSWORD 'djacketspassword';
@@ -195,8 +196,8 @@ pip install gunicorn
 cd ..
 # vi environment_3_8_2/bin/gunicorn_start
 # sh gunicorn_start (test)
-sudo chmod +x gunicorn_start
 cp Shoppingmall/environment_settingfile/gunicorn_start environment_3_8_2/bin/
+sudo chmod +x gunicorn_start
 apt install supervisor
 cp /webapps/djackets/Shoppingmall/environment_settingfile/djackets.conf /etc/supervisor/conf.d/
 mkdir /webapps/djackets/environment_3_8_2/logs/
