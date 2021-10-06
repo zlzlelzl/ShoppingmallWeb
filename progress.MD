@@ -194,9 +194,11 @@ python manageprod.py migrate
 pip install gunicorn
 cd ..
 # vi environment_3_8_2/bin/gunicorn_start
+# sh gunicorn_start (test)
+sudo chmod +x gunicorn_start
 cp Shoppingmall/environment_settingfile/gunicorn_start environment_3_8_2/bin/
 apt install supervisor
-vi environment_3_8_2/bin/etc/supervisor/conf.d/djackets.conf
+cp /webapps/djackets/Shoppingmall/environment_settingfile/djackets.conf /etc/supervisor/conf.d/
 mkdir /webapps/djackets/environment_3_8_2/logs/
 supervisorctl reread
 supervisorctl update
@@ -204,45 +206,45 @@ supervisorctl status
 cd /etc/nginx/sites-available/
 vi zlzlelzl.tk.nginx.conf
 cd ../sites-enabled
-# ln -s ../sites-available/zlzlelzl.tk.nginx.conf
+sudo certbot -d zlzlelzl.tk (y, a, 2)
+ln -s ../sites-available/zlzlelzl.tk .
 ```
-sudo certbot -d zlzlelzl.tk
 
 
 
-```nginx
+```bash
 upstream djackets_app_server {
 	server unix:/webapps/djackets/environment_3_8_2/run/gunicorn.sock fail_timeout=0;
 }
 
 server {
 	listen 80;
-	server_name apidjackets.codewithstein.com;
-	return 301 https://apidjackets.codewithstein.com$request_uri;
+	server_name zlzlelzl.tk;
+	return 301 https://zlzlelzl.tk$request_uri;
 }
 
 server {
 	listen 443 ssl;
-	server_name apidjackets.codewithstein.com;
+	server_name zlzlelzl.tk;
 
 	client_max_body_size 4G;
 
 	access_log /webapps/djackets/environment_3_8_2/logs/nginx-django-access.log;
 	error_log /webapps/djackets/environment_3_8_2/logs/nginx-django-error.log;
 
-	ssl_certificate /etc/letsencrypt/live/apidjackets.codewithstein.com/fullchain.pem;
-	ssl_certificate_key /etc/letsencrypt/live/apidjackets.codewithstein.com/privkey.pem;
+	ssl_certificate /etc/letsencrypt/live/zlzlelzl.tk/fullchain.pem;
+	ssl_certificate_key /etc/letse ncrypt/live/zlzlelzl.tk/privkey.pem;
 
 	ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
 	ssl_prefer_server_ciphers on;
 	ssl_ciphers 'EECDH+AESGCM:EDH+AESGCM:AES256+EECDH:AES256+EDH';
 
 	location /static/ {
-		alias /webapps/djackets//environment_3_8_2/djackets/static/;
+		alias /webapps/djackets/Shoppingmall/static/;
 	}
 
 	location /media/ {
-		alias /webapps/djackets/djackets_django/media/;
+		alias /webapps/djackets/Shoppingmall/media/;
 	}
 
 	location / {
@@ -257,5 +259,4 @@ server {
 		}
 	}
 }
-
 ```
