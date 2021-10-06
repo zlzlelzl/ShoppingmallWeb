@@ -197,7 +197,7 @@ cd ..
 # vi environment_3_8_2/bin/gunicorn_start
 # sh gunicorn_start (test)
 cp Shoppingmall/environment_settingfile/gunicorn_start environment_3_8_2/bin/
-sudo chmod +x gunicorn_start
+sudo chmod +x environment_3_8_2/bin/gunicorn_start
 apt install supervisor
 cp /webapps/djackets/Shoppingmall/environment_settingfile/djackets.conf /etc/supervisor/conf.d/
 mkdir /webapps/djackets/environment_3_8_2/logs/
@@ -261,3 +261,5 @@ server {
 	}
 }
 ```
+
+certbot limited
