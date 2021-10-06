@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 NAME='Shoppingmall'
 DJANGODIR=/webapps/djackets/Shoppingmall
@@ -11,7 +11,7 @@ DJANGO_WSGI_MODULE=Shoppingmall.wsgi
 TIMEOUT=120
 
 cd $DJANGODIR
-source ../environment_3_8_2/bin/activate
+sudo -s source ../environment_3_8_2/bin/activate
 export DJANGO_SETTINGS_MODULE=$DJANGO_SETTINGS_MODULE
 export PYTHONPATH=$DJANGODIR:$PYTHONPATH
 
