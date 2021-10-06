@@ -163,9 +163,8 @@ root required
 
 ``` bash
 sudo apt-get update
-sudo apt-get upgrade
-sudo apt install python3-pip python3-dev libpq-dev postgresql postgresql-contrib nginx
-sudo apt install certbot python3-certbot-nginx
+sudo apt-get upgrade -y
+sudo apt install python3-pip python3-dev libpq-dev postgresql postgresql-contrib nginx certbot python3-certbot-nginx -y
 sudo -u postgres psql
 CREATE DATABASE djackets;
 CREATE USER djacketsuser WITH PASSWORD 'djacketspassword';
@@ -184,13 +183,18 @@ virtualenv environment_3_8_2
 source environment_3_8_2/bin/activate
 pip install psycopg2-binary
 git clone ${my-django-project}
+cp ShoppingmallWeb/Shoppingmall/ . -r
+rm -r ShoppingmallWeb
+chown -R djackets:webapps ../ (djackets folder)
+cd Shoppingmall
+pip install -r requirements.txt
 vi secrets.json (this file gitignored)
-chown -R djackets:webapps . (env folder)
-pip install -r ./ShoppingmallWeb/Shoppingmall/requirements.txt
 python manageprod.py makemigrations
 python manageprod.py migrate
 pip install gunicorn
-vi environment_3_8_2/bin/gunicorn_start
+cd ..
+# vi environment_3_8_2/bin/gunicorn_start
+cp Shoppingmall/environment_settingfile/gunicorn_start environment_3_8_2/bin/
 apt install supervisor
 vi environment_3_8_2/bin/etc/supervisor/conf.d/djackets.conf
 mkdir /webapps/djackets/environment_3_8_2/logs/

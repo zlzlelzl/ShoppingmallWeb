@@ -14,7 +14,6 @@ def get_json(json_file_name, setting):
 
     with open(json_file) as f:
         raw_data = f.read()
-        print(raw_data)
         data = json.loads(raw_data)
 
     try:
