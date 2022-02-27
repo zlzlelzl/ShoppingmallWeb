@@ -266,9 +266,7 @@ certbot limited
 
 ## progress
 
-sudo apt install snapd
-sudo snap install --classic certbot
-sudo ln -s /snap/bin/certbot /usr/bin/certbot
-sudo certbot --nginx
-
-sudo apt install net-tools(for netstat)
+- make superuser and login
+- add categorys and products
+- modify prod uris from /product.py.Products
+- modify prod uri from /shoppingmall_vue/src/main.js.axios.defaults.baseURL and <code>npm run build</code>

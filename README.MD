@@ -16,6 +16,7 @@
 
 - bash로 자동실행파일 만들기
 - github action CD
+- 체크리스트 만들기
 
 ## done
 
@@ -24,4 +25,4 @@
 
 ## progress
 
-- 정리중
+- <a href="./progress.MD">progress</a>
