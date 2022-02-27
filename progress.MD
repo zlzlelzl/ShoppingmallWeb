@@ -270,3 +270,9 @@ certbot limited
 - add categorys and products
 - modify prod uris from /product.py.Products
 - modify prod uri from /shoppingmall_vue/src/main.js.axios.defaults.baseURL and <code>npm run build</code>
+
+```bash
+# zip dist/ and transfer deploy server
+# https://cloudlinuxtech.com/scp-permission-denied/
+$ scp -i {keyFile}.pem {fileName} {username}@{host}:{path}
+```
