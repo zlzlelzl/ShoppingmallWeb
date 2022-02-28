@@ -1,13 +1,16 @@
 ## nginx 팁
 
 nginx 플로우를 정확하게 파악해야 트러블슈팅을 할 수 있음
+
 proxy_pass 추가하여 L7 로드밸런싱
+
 supervisor는 health check 기능이 있다.
+
 api 도메인 따로 만들기
 
 http -> /etc/nginx/nginx.conf -> /etc/nginx/sites-enabled/* -> servers(api, front)
 
-servers(front) -> 
+servers(front) -> server(80,443) -> server(443) -> /dist (build) -> index.html -> servers(api)
 
 servers(api) -> server(80,443) -> server(443) -> static, media, proxy_pass {function_name}:upstream -> server unix:{SOCKFILE:gunicorn}.sock (SOCKFILE == /gunicorn {djangoFolder}.wsgi:application) -> supervisor
 
@@ -24,6 +27,7 @@ unlink /etc/nginx/sites-enabled/{file-name}
 ### 포트 사용중일때
 
 sudo apt install net-tools(for netstat)
+
 fuser -k -n tcp 80 (kill some port)
 
 ### 로드밸런서 종류
