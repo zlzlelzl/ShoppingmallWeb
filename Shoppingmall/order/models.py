@@ -1,3 +1,4 @@
+from operator import index
 from django.contrib.auth.models import User
 from django.db import models
 
